@@ -1,0 +1,61 @@
+dataset,split,class_id,class_name,instance_count,percentage_of_split
+SH17,train,0,person,11068,18.25
+SH17,train,1,ear,6118,10.09
+SH17,train,2,ear-mufs,269,0.44
+SH17,train,3,face,7095,11.7
+SH17,train,4,face-guard,110,0.18
+SH17,train,5,face-mask-medical,519,0.86
+SH17,train,6,foot,610,1.01
+SH17,train,7,tools,3724,6.14
+SH17,train,8,glasses,1547,2.55
+SH17,train,9,gloves,2261,3.73
+SH17,train,10,helmet,773,1.27
+SH17,train,11,hands,12638,20.84
+SH17,train,12,head,9558,15.76
+SH17,train,13,medical-suit,114,0.19
+SH17,train,14,shoes,3604,5.94
+SH17,train,15,safety-suit,195,0.32
+SH17,train,16,safety-vest,433,0.71
+SH17,val,0,person,2734,17.8
+SH17,val,1,ear,1612,10.5
+SH17,val,2,ear-mufs,49,0.32
+SH17,val,3,face,1855,12.08
+SH17,val,4,face-guard,24,0.16
+SH17,val,5,face-mask-medical,151,0.98
+SH17,val,6,foot,149,0.97
+SH17,val,7,tools,923,6.01
+SH17,val,8,glasses,398,2.59
+SH17,val,9,gloves,529,3.44
+SH17,val,10,helmet,154,1.0
+SH17,val,11,hands,3212,20.91
+SH17,val,12,head,2427,15.8
+SH17,val,13,medical-suit,43,0.28
+SH17,val,14,shoes,956,6.22
+SH17,val,15,safety-suit,45,0.29
+SH17,val,16,safety-vest,97,0.63
+CHV,train,0,person,3050,42.31
+CHV,train,1,vest,1396,19.37
+CHV,train,2,blue helmet,415,5.76
+CHV,train,3,red helmet,438,6.08
+CHV,train,4,white helmet,920,12.76
+CHV,train,5,yellow helmet,989,13.72
+CHV,valid,0,person,387,42.2
+CHV,valid,1,vest,171,18.65
+CHV,valid,2,blue helmet,49,5.34
+CHV,valid,3,red helmet,48,5.23
+CHV,valid,4,white helmet,99,10.8
+CHV,valid,5,yellow helmet,163,17.78
+CHV,test,0,person,450,41.51
+CHV,test,1,vest,217,20.02
+CHV,test,2,blue helmet,44,4.06
+CHV,test,3,red helmet,50,4.61
+CHV,test,4,white helmet,176,16.24
+CHV,test,5,yellow helmet,147,13.56
+CHVG,all,0,person,4674,40.28
+CHVG,all,1,vest,2137,18.42
+CHVG,all,2,blue,543,4.68
+CHVG,all,3,red,496,4.27
+CHVG,all,4,white,1292,11.13
+CHVG,all,5,yellow,1200,10.34
+CHVG,all,6,head,730,6.29
+CHVG,all,7,glass,532,4.58

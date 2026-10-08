@@ -1,0 +1,133 @@
+============================================================
+DATASET VALIDATION REPORT
+============================================================
+Dataset: SH17
+Directory: D:\VIT\CAO Project Code\Smart-Industrial-Safety\datasets\SH17
+YAML: D:\VIT\CAO Project Code\Smart-Industrial-Safety\datasets\SH17\data.yaml
+Total Classes Defined: 17
+Class Names: ['person', 'ear', 'ear-mufs', 'face', 'face-guard', 'face-mask-medical', 'foot', 'tools', 'glasses', 'gloves', 'helmet', 'hands', 'head', 'medical-suit', 'shoes', 'safety-suit', 'safety-vest']
+Overall Status: PASSED (VERIFIED RESEARCH-GRADE)
+
+Split Breakdown:
+Split: train
+  images: 6479
+  labels: 6479
+  objects: 60636
+  missing_labels: 0
+  missing_images: 0
+  invalid_labels: 0
+  out_of_range_classes: 0
+  unnormalized_coords: 0
+  nan_coords: 0
+  invalid_dimensions: 0
+  unreadable_images: 0
+
+Split: val
+  images: 1620
+  labels: 1620
+  objects: 15358
+  missing_labels: 0
+  missing_images: 0
+  invalid_labels: 0
+  out_of_range_classes: 0
+  unnormalized_coords: 0
+  nan_coords: 0
+  invalid_dimensions: 0
+  unreadable_images: 0
+
+All 10 validation criteria verified with ZERO errors.
+============================================================
+
+============================================================
+DATASET VALIDATION REPORT
+============================================================
+Dataset: CHV
+Directory: D:\VIT\CAO Project Code\Smart-Industrial-Safety\datasets\CHV
+YAML: D:\VIT\CAO Project Code\Smart-Industrial-Safety\datasets\CHV\data.yaml
+Total Classes Defined: 6
+Class Names: ['person', 'vest', 'blue helmet', 'red helmet', 'white helmet', 'yellow helmet']
+Overall Status: PASSED (VERIFIED RESEARCH-GRADE)
+
+Split Breakdown:
+Split: train
+  images: 1064
+  labels: 1064
+  objects: 7208
+  missing_labels: 0
+  missing_images: 0
+  invalid_labels: 0
+  out_of_range_classes: 0
+  unnormalized_coords: 0
+  nan_coords: 0
+  invalid_dimensions: 0
+  unreadable_images: 0
+
+Split: val
+  images: 133
+  labels: 133
+  objects: 917
+  missing_labels: 0
+  missing_images: 0
+  invalid_labels: 0
+  out_of_range_classes: 0
+  unnormalized_coords: 0
+  nan_coords: 0
+  invalid_dimensions: 0
+  unreadable_images: 0
+
+Split: test
+  images: 133
+  labels: 133
+  objects: 1084
+  missing_labels: 0
+  missing_images: 0
+  invalid_labels: 0
+  out_of_range_classes: 0
+  unnormalized_coords: 0
+  nan_coords: 0
+  invalid_dimensions: 0
+  unreadable_images: 0
+
+All 10 validation criteria verified with ZERO errors.
+============================================================
+
+============================================================
+DATASET VALIDATION REPORT
+============================================================
+Dataset: CHVG
+Directory: D:\VIT\CAO Project Code\Smart-Industrial-Safety\datasets\CHVG
+YAML: D:\VIT\CAO Project Code\Smart-Industrial-Safety\datasets\CHVG\data.yaml
+Total Classes Defined: 8
+Class Names: ['person', 'vest', 'blue', 'red', 'white', 'yellow', 'head', 'glass']
+Overall Status: PASSED (VERIFIED RESEARCH-GRADE)
+
+Split Breakdown:
+Split: train
+  images: 1699
+  labels: 1699
+  objects: 11604
+  missing_labels: 0
+  missing_images: 0
+  invalid_labels: 0
+  out_of_range_classes: 0
+  unnormalized_coords: 0
+  nan_coords: 0
+  invalid_dimensions: 0
+  unreadable_images: 0
+
+Split: val
+  images: 1699
+  labels: 1699
+  objects: 11604
+  missing_labels: 0
+  missing_images: 0
+  invalid_labels: 0
+  out_of_range_classes: 0
+  unnormalized_coords: 0
+  nan_coords: 0
+  invalid_dimensions: 0
+  unreadable_images: 0
+
+All 10 validation criteria verified with ZERO errors.
+============================================================
+

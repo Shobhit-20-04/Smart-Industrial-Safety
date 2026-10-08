@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# Large Datasets (Images & Labels)
+# Keep data.yaml configs tracked in git
+datasets/*/images/
+datasets/*/labels/
+datasets/SH17/images/
+datasets/SH17/labels/
+datasets/CHV/images/
+datasets/CHV/labels/
+datasets/CHVG/images/
+datasets/CHVG/labels/
+
+# Model Weights & Checkpoints (Large binaries)
+*.pt
+*.onnx
+*.engine
+*.bin
+*.xml.meta
+runs/
+models/*.pt
+models/*.bin
+models/openvino_*/*.bin
+weights/
+
+# Logs & Temporary files
+*.log
+*.tmp
+.cache/
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -1,0 +1,76 @@
+# Cross-Dataset Class Mapping Configuration
+# Smart Industrial Safety Monitoring System
+# M.Tech CSE Research Project
+
+sh17_classes:
+  0: "person"
+  1: "ear"
+  2: "ear-mufs"
+  3: "face"
+  4: "face-guard"
+  5: "face-mask-medical"
+  6: "foot"
+  7: "tools"
+  8: "glasses"
+  9: "gloves"
+  10: "helmet"
+  11: "hands"
+  12: "head"
+  13: "medical-suit"
+  14: "shoes"
+  15: "safety-suit"
+  16: "safety-vest"
+
+chv_classes:
+  0: "person"
+  1: "vest"
+  2: "blue helmet"
+  3: "red helmet"
+  4: "white helmet"
+  5: "yellow helmet"
+
+chvg_classes:
+  0: "person"
+  1: "vest"
+  2: "blue"
+  3: "red"
+  4: "white"
+  5: "yellow"
+  6: "head"
+  7: "glass"
+
+# Primary PPE Common Evaluation Concepts
+# Maps SH17 predictions to CHV ground truth concepts
+sh17_to_chv_mapping:
+  # SH17 class -> CHV unified concept
+  "person": "person"
+  "safety-vest": "vest"
+  "helmet": "helmet" # Matches CHV [blue helmet, red helmet, white helmet, yellow helmet] aggregated as 'helmet'
+
+# Maps SH17 predictions to CHVG ground truth concepts
+sh17_to_chvg_mapping:
+  "person": "person"
+  "safety-vest": "vest"
+  "helmet": "helmet" # Matches CHVG [blue, red, white, yellow] aggregated as 'helmet'
+  "glasses": "glass"
+  "head": "head"
+
+# CHV class group to unified concept
+chv_to_unified:
+  "person": "person"
+  "vest": "vest"
+  "blue helmet": "helmet"
+  "red helmet": "helmet"
+  "white helmet": "helmet"
+  "yellow helmet": "helmet"
+
+# CHVG class group to unified concept
+chvg_to_unified:
+  "person": "person"
+  "vest": "vest"
+  "blue": "helmet"
+  "red": "helmet"
+  "white": "helmet"
+  "yellow": "helmet"
+  "head": "head"
+  "glass": "glasses"

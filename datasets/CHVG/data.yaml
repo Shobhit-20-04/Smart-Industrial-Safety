@@ -1,0 +1,12 @@
+path: D:/VIT/CAO Project Code/Smart-Industrial-Safety/datasets/CHVG
+train: images
+val: images
+names:
+  0: person
+  1: vest
+  2: blue
+  3: red
+  4: white
+  5: yellow
+  6: head
+  7: glass

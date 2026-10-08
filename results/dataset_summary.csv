@@ -1,0 +1,4 @@
+dataset,image_count,annotation_count,class_count,classes,missing_images,missing_annotations,invalid_annotations
+SH17,8099,8099,17,person;ear;ear-mufs;face;face-guard;face-mask-medical;foot;tools;glasses;gloves;helmet;hands;head;medical-suit;shoes;safety-suit;safety-vest,0,0,0
+CHV,1330,1330,6,person;vest;blue helmet;red helmet;white helmet;yellow helmet,0,0,0
+CHVG,1699,1699,8,person;vest;white;yellow;head;blue;glass;red,0,0,0

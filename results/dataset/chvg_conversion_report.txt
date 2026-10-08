@@ -1,0 +1,25 @@
+============================================================
+CHVG DATASET CONVERSION REPORT
+============================================================
+Raw Directory: D:\VIT\CAO Project Code\CHVG-Dataset
+Prepared Directory: D:\VIT\CAO Project Code\Smart-Industrial-Safety\datasets\CHVG
+Placement Mode: hardlink
+Data YAML: D:\VIT\CAO Project Code\Smart-Industrial-Safety\datasets\CHVG\data.yaml
+
+total XML files: 1699
+successful conversions: 1699
+missing images: 0
+invalid XML: 0
+unknown classes: 0
+empty annotations: 1
+
+total objects per class:
+  person      : 4,674
+  vest        : 2,137
+  blue        : 543
+  red         : 496
+  white       : 1,292
+  yellow      : 1,200
+  head        : 730
+  glass       : 532
+============================================================

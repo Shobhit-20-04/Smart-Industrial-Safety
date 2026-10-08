@@ -1,0 +1,21 @@
+path: D:/VIT/CAO Project Code/Smart-Industrial-Safety/datasets/SH17
+train: images/train
+val: images/val
+names:
+  0: person
+  1: ear
+  2: ear-mufs
+  3: face
+  4: face-guard
+  5: face-mask-medical
+  6: foot
+  7: tools
+  8: glasses
+  9: gloves
+  10: helmet
+  11: hands
+  12: head
+  13: medical-suit
+  14: shoes
+  15: safety-suit
+  16: safety-vest

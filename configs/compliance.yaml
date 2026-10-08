@@ -1,0 +1,22 @@
+# Industrial Safety Compliance Policy Configuration
+# Defines mandatory and recommended PPE requirements for personnel monitoring
+
+compliance_rules:
+  # Mandatory PPE: Worker is in VIOLATION if any mandatory item is missing
+  mandatory_ppe:
+    - helmet
+    - safety-vest
+
+  # Optional / Recommended PPE: Displayed as advisory warning
+  recommended_ppe:
+    - glasses
+    - gloves
+    - shoes
+
+  # Spatial Association Thresholds:
+  # Proximity multiplier to associate a PPE bounding box with a detected person box
+  association:
+    iou_overlap_threshold: 0.10
+    head_region_fraction: 0.35 # Top 35% of person box where helmet/glasses/face-mask should be located
+    torso_region_fraction: 0.60 # 15% to 75% of person box where safety-vest should be located
+    confidence_threshold: 0.35

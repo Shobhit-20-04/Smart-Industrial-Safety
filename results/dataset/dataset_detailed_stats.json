@@ -1,0 +1,195 @@
+{
+  "SH17": {
+    "classes": [
+      "person",
+      "ear",
+      "ear-mufs",
+      "face",
+      "face-guard",
+      "face-mask-medical",
+      "foot",
+      "tools",
+      "glasses",
+      "gloves",
+      "helmet",
+      "hands",
+      "head",
+      "medical-suit",
+      "shoes",
+      "safety-suit",
+      "safety-vest"
+    ],
+    "train": {
+      "num_images": 6479,
+      "total_objects": 60636,
+      "mean_objects_per_image": 9.36,
+      "min_objects_per_image": 1,
+      "max_objects_per_image": 154,
+      "class_counts": {
+        "hands": 12638,
+        "shoes": 3604,
+        "safety-suit": 195,
+        "helmet": 773,
+        "person": 11068,
+        "tools": 3724,
+        "head": 9558,
+        "face": 7095,
+        "ear": 6118,
+        "gloves": 2261,
+        "safety-vest": 433,
+        "glasses": 1547,
+        "face-mask-medical": 519,
+        "ear-mufs": 269,
+        "face-guard": 110,
+        "foot": 610,
+        "medical-suit": 114
+      },
+      "scale_distribution": {
+        "small": 24604,
+        "medium": 22476,
+        "large": 13556
+      }
+    },
+    "val": {
+      "num_images": 1620,
+      "total_objects": 15358,
+      "mean_objects_per_image": 9.48,
+      "min_objects_per_image": 1,
+      "max_objects_per_image": 134,
+      "class_counts": {
+        "gloves": 529,
+        "head": 2427,
+        "face": 1855,
+        "ear": 1612,
+        "hands": 3212,
+        "face-mask-medical": 151,
+        "person": 2734,
+        "helmet": 154,
+        "shoes": 956,
+        "tools": 923,
+        "foot": 149,
+        "safety-suit": 45,
+        "safety-vest": 97,
+        "face-guard": 24,
+        "glasses": 398,
+        "ear-mufs": 49,
+        "medical-suit": 43
+      },
+      "scale_distribution": {
+        "small": 6085,
+        "medium": 5860,
+        "large": 3413
+      }
+    },
+    "total_images": 8099,
+    "total_objects": 75994
+  },
+  "CHV": {
+    "classes": [
+      "person",
+      "vest",
+      "blue helmet",
+      "red helmet",
+      "white helmet",
+      "yellow helmet"
+    ],
+    "train": {
+      "num_images": 1064,
+      "total_objects": 7208,
+      "mean_objects_per_image": 6.77,
+      "min_objects_per_image": 1,
+      "max_objects_per_image": 54,
+      "class_counts": {
+        "yellow helmet": 989,
+        "person": 3050,
+        "white helmet": 920,
+        "vest": 1396,
+        "blue helmet": 415,
+        "red helmet": 438
+      },
+      "scale_distribution": {
+        "small": 1797,
+        "medium": 2980,
+        "large": 2431
+      }
+    },
+    "valid": {
+      "num_images": 133,
+      "total_objects": 917,
+      "mean_objects_per_image": 6.89,
+      "min_objects_per_image": 2,
+      "max_objects_per_image": 60,
+      "class_counts": {
+        "white helmet": 99,
+        "person": 387,
+        "vest": 171,
+        "yellow helmet": 163,
+        "red helmet": 48,
+        "blue helmet": 49
+      },
+      "scale_distribution": {
+        "small": 269,
+        "medium": 361,
+        "large": 287
+      }
+    },
+    "test": {
+      "num_images": 133,
+      "total_objects": 1084,
+      "mean_objects_per_image": 8.15,
+      "min_objects_per_image": 1,
+      "max_objects_per_image": 45,
+      "class_counts": {
+        "blue helmet": 44,
+        "person": 450,
+        "vest": 217,
+        "yellow helmet": 147,
+        "white helmet": 176,
+        "red helmet": 50
+      },
+      "scale_distribution": {
+        "small": 358,
+        "medium": 446,
+        "large": 280
+      }
+    },
+    "total_images": 1330,
+    "total_objects": 9209
+  },
+  "CHVG": {
+    "classes": [
+      "person",
+      "vest",
+      "blue",
+      "red",
+      "white",
+      "yellow",
+      "head",
+      "glass"
+    ],
+    "all": {
+      "num_images": 1699,
+      "total_objects": 11604,
+      "mean_objects_per_image": 6.83,
+      "min_objects_per_image": 0,
+      "max_objects_per_image": 46,
+      "class_counts": {
+        "head": 730,
+        "person": 4674,
+        "glass": 532,
+        "yellow": 1200,
+        "white": 1292,
+        "vest": 2137,
+        "red": 496,
+        "blue": 543
+      },
+      "scale_distribution": {
+        "small": 2006,
+        "medium": 4926,
+        "large": 4672
+      }
+    },
+    "total_images": 1699,
+    "total_objects": 11604
+  }
+}

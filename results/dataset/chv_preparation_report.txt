@@ -1,0 +1,31 @@
+============================================================
+CHV DATASET PREPARATION REPORT
+============================================================
+Raw Directory: D:\VIT\CAO Project Code\CHV_dataset\CHV_dataset
+Prepared Directory: D:\VIT\CAO Project Code\Smart-Industrial-Safety\datasets\CHV
+Placement Mode: hardlink
+
+Split 'train':
+  Target Samples: 1064
+  Images Placed: 1064
+  Labels Placed: 1064
+  Missing Images: 0
+  Missing Labels: 0
+
+Split 'valid':
+  Target Samples: 133
+  Images Placed: 133
+  Labels Placed: 133
+  Missing Images: 0
+  Missing Labels: 0
+
+Split 'test':
+  Target Samples: 133
+  Images Placed: 133
+  Labels Placed: 133
+  Missing Images: 0
+  Missing Labels: 0
+
+Data YAML: D:\VIT\CAO Project Code\Smart-Industrial-Safety\datasets\CHV\data.yaml
+Total Classes (6): ['person', 'vest', 'blue helmet', 'red helmet', 'white helmet', 'yellow helmet']
+============================================================

@@ -1,0 +1,69 @@
+======================================================================
+RESEARCH-GRADE DATASET INSPECTION REPORT
+Project: Smart Industrial Safety Monitoring System
+======================================================================
+
+DATASET: SH17
+  Raw Path: D:\VIT\CAO Project Code\SH_dataset
+  Images: 8099
+  Annotations: 8099
+  Missing Images: 0
+  Missing Annotations: 0
+  Invalid Annotations: 0
+  Class Count: 17
+  Classes: person, ear, ear-mufs, face, face-guard, face-mask-medical, foot, tools, glasses, gloves, helmet, hands, head, medical-suit, shoes, safety-suit, safety-vest
+  Class Instance Breakdown:
+    - person: 13,802
+    - ear: 7,730
+    - ear-mufs: 318
+    - face: 8,950
+    - face-guard: 134
+    - face-mask-medical: 670
+    - foot: 759
+    - tools: 4,647
+    - glasses: 1,945
+    - gloves: 2,790
+    - helmet: 927
+    - hands: 15,850
+    - head: 11,985
+    - medical-suit: 157
+    - shoes: 4,560
+    - safety-suit: 240
+    - safety-vest: 530
+----------------------------------------------------------------------
+DATASET: CHV
+  Raw Path: D:\VIT\CAO Project Code\CHV_dataset\CHV_dataset
+  Images: 1330
+  Annotations: 1330
+  Missing Images: 0
+  Missing Annotations: 0
+  Invalid Annotations: 0
+  Class Count: 6
+  Classes: person, vest, blue helmet, red helmet, white helmet, yellow helmet
+  Class Instance Breakdown:
+    - person: 3,887
+    - vest: 1,784
+    - blue helmet: 508
+    - red helmet: 536
+    - white helmet: 1,195
+    - yellow helmet: 1,299
+----------------------------------------------------------------------
+DATASET: CHVG
+  Raw Path: D:\VIT\CAO Project Code\CHVG-Dataset
+  Images: 1699
+  Annotations: 1699
+  Missing Images: 0
+  Missing Annotations: 0
+  Invalid Annotations: 0
+  Class Count: 8
+  Classes: person, vest, white, yellow, head, blue, glass, red
+  Class Instance Breakdown:
+    - head: 730
+    - person: 4,674
+    - glass: 532
+    - yellow: 1,200
+    - white: 1,292
+    - vest: 2,137
+    - red: 496
+    - blue: 543
+----------------------------------------------------------------------

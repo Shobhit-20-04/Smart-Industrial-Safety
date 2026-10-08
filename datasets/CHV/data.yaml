@@ -1,0 +1,11 @@
+path: D:/VIT/CAO Project Code/Smart-Industrial-Safety/datasets/CHV
+train: images/train
+val: images/valid
+test: images/test
+names:
+  0: person
+  1: vest
+  2: blue helmet
+  3: red helmet
+  4: white helmet
+  5: yellow helmet

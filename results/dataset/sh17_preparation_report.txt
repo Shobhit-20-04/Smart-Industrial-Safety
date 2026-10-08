@@ -1,0 +1,42 @@
+============================================================
+SH17 DATASET PREPARATION REPORT
+============================================================
+Raw Directory: D:\VIT\CAO Project Code\SH_dataset
+Prepared Directory: D:\VIT\CAO Project Code\Smart-Industrial-Safety\datasets\SH17
+Placement Mode: hardlink
+Data YAML: D:\VIT\CAO Project Code\Smart-Industrial-Safety\datasets\SH17\data.yaml
+
+Train Set:
+  Target Image Count: 6479
+  Images Placed: 6479
+  Labels Placed: 6479
+  Missing Images: 0
+  Missing Labels: 0
+
+Validation Set:
+  Target Image Count: 1620
+  Images Placed: 1620
+  Labels Placed: 1620
+  Missing Images: 0
+  Missing Labels: 0
+
+Total Classes: 17
+Class Hierarchy / List:
+   0: person
+   1: ear
+   2: ear-mufs
+   3: face
+   4: face-guard
+   5: face-mask-medical
+   6: foot
+   7: tools
+   8: glasses
+   9: gloves
+  10: helmet
+  11: hands
+  12: head
+  13: medical-suit
+  14: shoes
+  15: safety-suit
+  16: safety-vest
+============================================================

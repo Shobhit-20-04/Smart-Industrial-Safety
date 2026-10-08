@@ -1,0 +1,15 @@
+============================================================
+SYSTEM & ML ENVIRONMENT VERIFICATION
+============================================================
+Operating System: Windows 10 (10.0.26300)
+CPU: Intel64 Family 6 Model 183 Stepping 1, GenuineIntel
+RAM: 15.69 GB
+Python version: 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]
+PyTorch version: 2.5.1+cu121
+CUDA availability: True
+GPU name: NVIDIA GeForce RTX 3050 6GB Laptop GPU
+GPU VRAM: 6.00 GB
+Ultralytics version: 8.4.174
+OpenVINO version: 2026.3.1-22476-759c5a6ab8c-releases/2026/3
+OpenCV version: 5.0.0
+============================================================

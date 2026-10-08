@@ -1,0 +1,2 @@
+experiment,model,dataset,epochs,imgsz,precision,recall,map50,map50_95,best_epoch,model_size_mb,parameters,elapsed_minutes
+smoke_yolov8n,yolov8n.pt,data,3,640,0.7423,0.3247,0.3377,0.2045,3,5.94,3014163,31.96
