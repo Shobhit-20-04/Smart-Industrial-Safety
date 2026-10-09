@@ -1,0 +1,2 @@
+model,dataset,split,precision,recall,map50,map50_95,speed_preprocess_ms,speed_inference_ms,speed_postprocess_ms
+exp1_yolov8n_best.pt,SH17,val,0.6701,0.5202,0.5473,0.3403,1.26,3.97,1.39
