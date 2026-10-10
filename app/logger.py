@@ -146,6 +146,55 @@ class SafetyEventLogger:
 
         return screenshot_path
 
+    def delete_oldest_records(self, n: int, delete_screenshots: bool = True) -> int:
+        """
+        Deletes the oldest n records from the CSV audit trail and optionally deletes associated screenshots.
+        Returns the number of records actually deleted.
+        """
+        # Ensure any in-flight asynchronous write tasks are flushed
+        try:
+            self._queue.join()
+        except Exception:
+            pass
+
+        if not self.log_file.exists():
+            return 0
+
+        # Read all rows
+        rows = []
+        with open(self.log_file, "r", newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            fieldnames = reader.fieldnames or self.fieldnames
+            rows = list(reader)
+
+        total_rows = len(rows)
+        if total_rows == 0 or n <= 0:
+            return 0
+
+        num_to_delete = min(n, total_rows)
+        rows_to_delete = rows[:num_to_delete]
+        rows_to_keep = rows[num_to_delete:]
+
+        # Delete corresponding screenshot files if requested
+        if delete_screenshots:
+            for r in rows_to_delete:
+                s_path = r.get("screenshot_path", "").strip()
+                if s_path:
+                    try:
+                        p = Path(s_path)
+                        if p.exists() and p.is_file():
+                            p.unlink(missing_ok=True)
+                    except Exception as e:
+                        print(f"[logger] Note: could not delete screenshot {s_path}: {e}")
+
+        # Rewrite remaining rows back to CSV
+        with open(self.log_file, "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(rows_to_keep)
+
+        return num_to_delete
+
     def close(self):
         """Flush queue and cleanly stop background thread."""
         self._stop_event.set()

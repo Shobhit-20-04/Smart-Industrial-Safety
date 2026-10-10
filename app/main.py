@@ -39,18 +39,29 @@ class ThreadedVideoStream:
     from webcam or video stream, eliminating camera I/O blocking.
     """
     def __init__(self, src: int | str):
-        self.cap = cv2.VideoCapture(src)
+        self.src = src
+        # On Windows, DirectShow (CAP_DSHOW) ensures fast startup and clean device release
+        if isinstance(src, int) and sys.platform.startswith("win"):
+            self.cap = cv2.VideoCapture(src, cv2.CAP_DSHOW)
+            if not self.cap.isOpened():
+                self.cap = cv2.VideoCapture(src)
+        else:
+            self.cap = cv2.VideoCapture(src)
+
         if not self.cap.isOpened():
             raise RuntimeError(f"Unable to open video stream source: {src}")
 
-        self.ret, self.frame = self.cap.read()
         self.stopped = False
         self.lock = threading.Lock()
+        self.ret, self.frame = self.cap.read()
         self.thread = threading.Thread(target=self._update, daemon=True)
         self.thread.start()
 
     def _update(self):
         while not self.stopped:
+            if not self.cap.isOpened():
+                self.stopped = True
+                break
             ret, frame = self.cap.read()
             if not ret or frame is None:
                 self.stopped = True
@@ -58,6 +69,7 @@ class ThreadedVideoStream:
             with self.lock:
                 self.ret = ret
                 self.frame = frame
+            time.sleep(0.005) # Yield CPU slice to avoid busy waiting
 
     def read(self):
         with self.lock:
@@ -66,8 +78,12 @@ class ThreadedVideoStream:
     def stop(self):
         self.stopped = True
         if self.thread.is_alive():
-            self.thread.join(timeout=1.0)
-        self.cap.release()
+            self.thread.join(timeout=0.4)
+        try:
+            if self.cap.isOpened():
+                self.cap.release()
+        except Exception:
+            pass
 
 def draw_hud(
     frame: np.ndarray,
