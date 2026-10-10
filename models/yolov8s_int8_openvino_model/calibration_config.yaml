@@ -1,0 +1,11 @@
+calibration_fraction: 0.05
+calibration_split: train
+dataset_config: datasets\SH17\data.yaml
+export_duration_seconds: 90.4
+framework: Intel OpenVINO + NNCF
+image_size: 640
+model_size_mb: 11.23
+model_source: models\yolov8s_sh17_best.pt
+optimization_method: Post-Training Quantization (PTQ)
+precision: INT8
+timestamp: '2026-10-10 11:06:43'

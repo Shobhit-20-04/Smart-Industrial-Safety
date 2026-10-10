@@ -1,0 +1,5 @@
+Version,Model File,Precision,Recall,mAP50,mAP50-95,Latency (ms),FPS,Model Size (MB),RAM Usage (MB),Compression Ratio,Speedup vs Baseline
+PyTorch FP32 Baseline,models/yolov8s_sh17_best.pt,0.7668,0.5699,0.6214,0.4008,113.94,8.78,21.48,652.76,1.0x,1.0x
+OpenVINO FP32,models/yolov8s_fp32_openvino_model,0.7062,0.5847,0.6184,0.3981,69.88,14.31,42.79,817.86,0.50x,1.63x
+OpenVINO FP16,models/yolov8s_fp16_openvino_model,0.7062,0.5847,0.6184,0.3981,70.0,14.29,21.58,799.9,1.0x (2.0x vs FP32),1.63x
+OpenVINO INT8 (PTQ),models/yolov8s_int8_openvino_model,0.7039,0.5839,0.6178,0.3982,46.13,21.68,11.23,760.12,1.91x (3.81x vs FP32),2.47x

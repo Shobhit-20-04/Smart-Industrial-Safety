@@ -3,3 +3,7 @@ yolov8n_sh17_best.pt,PyTorch,0,640,100,6.25,6.05,7.17,160.01,5.96,1058.17
 yolov8s_sh17_best.pt,PyTorch,0,640,100,11.89,11.84,12.4,84.08,21.48,1136.37
 yolov8n_sh17_best.pt,PyTorch,cpu,640,20,50.49,50.49,53.0,19.81,5.96,573.31
 yolov8s_sh17_best.pt,PyTorch,cpu,640,20,103.03,102.36,107.5,9.71,21.48,655.39
+yolov8s_sh17_best.pt,PyTorch,cpu,640,100,113.94,107.28,146.93,8.78,21.48,652.76
+yolov8s_fp32_openvino_model,OpenVINO,cpu,640,100,69.88,69.83,70.89,14.31,42.79,817.86
+yolov8s_fp16_openvino_model,OpenVINO,cpu,640,100,70.0,69.98,70.79,14.29,21.58,799.9
+yolov8s_int8_openvino_model,OpenVINO,cpu,640,100,46.13,46.14,46.86,21.68,11.23,760.12
