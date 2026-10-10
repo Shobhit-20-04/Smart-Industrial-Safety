@@ -1,0 +1,6 @@
+target_dataset,concept,ground_truth_instances,true_positives,false_positives,false_negatives,precision,recall,f1_score,ap50
+CHVG,glasses,532,190,263,342,0.4194,0.3571,0.3858,0.1832
+CHVG,head,730,631,3796,99,0.1425,0.8644,0.2447,0.2209
+CHVG,helmet,3531,2338,438,1193,0.8422,0.6621,0.7414,0.613
+CHVG,person,4674,4012,863,662,0.823,0.8584,0.8403,0.8279
+CHVG,vest,2137,736,173,1401,0.8097,0.3444,0.4833,0.3218

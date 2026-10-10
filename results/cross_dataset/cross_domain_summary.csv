@@ -1,0 +1,4 @@
+Evaluation,Target Dataset,Common Classes Evaluated,Precision,Recall,F1_Score,mAP50,Latency_ms,FPS,Performance_Drop_mAP50
+In-Domain (SH17 Val),SH17,All 17 Classes,0.7668,0.5699,0.6539,0.6214,11.89,84.08,0.0%
+Cross-Domain (SH17 -> CHV),CHV,"helmet, person, vest",0.839,0.6951,0.7551,0.6494,61.12,16.36,+4.5% (Relative Gain on Common Core PPE)
+Cross-Domain (SH17 -> CHVG),CHVG,"glasses, head, helmet, person, vest",0.6074,0.6173,0.5391,0.4334,23.65,42.28,-30.3% (Degradation driven by Head/Vest taxonomy)

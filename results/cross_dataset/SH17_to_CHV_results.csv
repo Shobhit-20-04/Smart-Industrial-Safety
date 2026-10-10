@@ -1,0 +1,4 @@
+target_dataset,concept,ground_truth_instances,true_positives,false_positives,false_negatives,precision,recall,f1_score,ap50
+CHV,helmet,417,277,40,140,0.8738,0.6643,0.7548,0.6479
+CHV,person,450,372,93,78,0.8,0.8267,0.8131,0.7628
+CHV,vest,217,129,24,88,0.8431,0.5945,0.6973,0.5375
