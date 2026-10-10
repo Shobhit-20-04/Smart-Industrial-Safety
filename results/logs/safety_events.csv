@@ -1,0 +1,3 @@
+timestamp,frame_id,worker_id,status,detected_ppe,missing_ppe,worker_confidence,screenshot_path
+2026-10-10 11:50:20,1,Worker 1,PPE VIOLATION,helmet,safety-vest; gloves; glasses,0.88,D:\VIT\CAO Project Code\Smart-Industrial-Safety\results\logs\violations\violation_f000001_Worker_1_1791613220.jpg
+2026-10-10 11:51:23,1,Worker 1,PPE VIOLATION,helmet,safety-vest,0.88,D:\VIT\CAO Project Code\Smart-Industrial-Safety\results\logs\violations\violation_f000001_Worker_1_1791613283.jpg
