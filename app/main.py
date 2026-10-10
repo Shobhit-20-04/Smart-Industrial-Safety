@@ -326,7 +326,7 @@ if __name__ == "__main__":
                         help="Inference resolution scale (480/512 for higher speed, 640 for standard)")
     parser.add_argument("--stride", type=int, default=1, choices=[1, 2, 3],
                         help="Frame stride (1 = every frame, 2 = alternate frames for 2x speedup)")
-    parser.add_argument("--conf", type=float, default=0.35, help="Detection confidence threshold")
+    parser.add_argument("--conf", type=float, default=0.25, help="Detection confidence threshold (default 0.25)")
     parser.add_argument("--required-ppe", type=str, default="helmet,safety-vest",
                         help="Comma-separated required PPE list")
     parser.add_argument("--save-violations", action="store_true", default=True,

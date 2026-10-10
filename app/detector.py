@@ -60,20 +60,19 @@ class PPEDetector:
         # Determine FP16 / Tensor Core acceleration
         self.use_half = False
         if not self.is_openvino and self.device in ["0", "cuda", "cuda:0"] and torch.cuda.is_available():
-            self.use_half = True
-            print(f"[detector] Enabled Tensor Core FP16 half-precision on {self.device.upper()}")
+            try:
+                self.model.to("cuda")
+                if hasattr(self.model, "model") and self.model.model is not None:
+                    self.model.model.half()
+                self.use_half = True
+                print(f"[detector] Enabled native Tensor Core FP16 execution on {self.device.upper()}")
+            except Exception as e:
+                print(f"[detector] FP16 conversion note: {e}")
 
         # Pre-warm model with dummy inference to avoid initial frame latency spikes
         dummy_frame = np.zeros((self.imgsz, self.imgsz, 3), dtype=np.uint8)
         try:
-            warm_kwargs = {
-                "imgsz": self.imgsz,
-                "device": self.device,
-                "verbose": False
-            }
-            if self.use_half:
-                warm_kwargs["half"] = True
-            _ = self.model.predict(dummy_frame, **warm_kwargs)
+            _ = self.model.predict(dummy_frame, imgsz=self.imgsz, device=self.device, verbose=False)
             print(f"[detector] Engine pre-warmed. Active classes: {len(self.class_names)} ({self.runtime_name} {self.precision})")
         except Exception as e:
             print(f"[detector] Note: warm-up skipped: {e}")
@@ -81,7 +80,7 @@ class PPEDetector:
     def detect(
         self,
         image: np.ndarray,
-        conf_thresh: float = 0.35,
+        conf_thresh: float = 0.25,
         iou_thresh: float = 0.45,
         imgsz: int = None
     ) -> Tuple[List[Dict[str, Any]], float]:
@@ -99,8 +98,6 @@ class PPEDetector:
             "device": self.device,
             "verbose": False
         }
-        if self.use_half:
-            pred_kwargs["half"] = True
 
         t0 = time.perf_counter()
         results = self.model.predict(image, **pred_kwargs)[0]

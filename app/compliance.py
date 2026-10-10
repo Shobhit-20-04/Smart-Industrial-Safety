@@ -16,14 +16,15 @@ class PPEComplianceEngine:
     determines compliance status, and tracks violation statistics.
     """
     # Mapping of PPE concepts to compatible model class names
+    # High-visibility body gear satisfies mandatory upper-body protection (vests, jackets, and safety-suits)
     PPE_SYNONYMS = {
         "helmet": ["helmet", "blue helmet", "red helmet", "white helmet", "yellow helmet"],
-        "safety-vest": ["safety-vest", "vest"],
+        "safety-vest": ["safety-vest", "vest", "safety-suit"],
         "gloves": ["gloves"],
         "glasses": ["glasses", "glass"],
         "face-mask": ["face-mask-medical"],
         "face-guard": ["face-guard"],
-        "safety-suit": ["safety-suit", "medical-suit"]
+        "safety-suit": ["safety-suit", "medical-suit", "safety-vest"]
     }
 
     def __init__(

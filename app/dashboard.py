@@ -141,7 +141,7 @@ with col_stride:
     frame_stride = st.selectbox("Frame Stride", [1, 2, 3], index=1, help="Process every Nth frame (Stride 2 doubles playback throughput).")
 
 # Confidence & Policy Controls
-conf_threshold = st.sidebar.slider("Detection Confidence Threshold", 0.15, 0.90, 0.35, 0.05)
+conf_threshold = st.sidebar.slider("Detection Confidence Threshold", 0.10, 0.85, 0.25, 0.05, help="0.20-0.25 captures occluded PPE gear while avoiding false positives.")
 
 st.sidebar.subheader("Mandatory PPE Policy")
 PPE_CHOICES = ["helmet", "safety-vest", "gloves", "glasses", "face-mask"]
