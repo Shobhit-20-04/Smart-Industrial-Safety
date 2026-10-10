@@ -1,0 +1,5 @@
+model,runtime,device,imgsz,measured_runs,avg_latency_ms,median_latency_ms,p95_latency_ms,fps,model_size_mb,ram_usage_mb
+yolov8n_sh17_best.pt,PyTorch,0,640,100,6.25,6.05,7.17,160.01,5.96,1058.17
+yolov8s_sh17_best.pt,PyTorch,0,640,100,11.89,11.84,12.4,84.08,21.48,1136.37
+yolov8n_sh17_best.pt,PyTorch,cpu,640,20,50.49,50.49,53.0,19.81,5.96,573.31
+yolov8s_sh17_best.pt,PyTorch,cpu,640,20,103.03,102.36,107.5,9.71,21.48,655.39
