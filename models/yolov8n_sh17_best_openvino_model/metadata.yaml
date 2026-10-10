@@ -1,0 +1,40 @@
+description: Ultralytics YOLOv8n_sh17_best model trained on datasets\SH17\data.yaml
+author: Ultralytics
+date: '2026-10-10T13:12:12.127640+05:30'
+version: 8.4.174
+license: AGPL-3.0 License (https://ultralytics.com/license)
+docs: https://docs.ultralytics.com
+stride: 32
+task: detect
+head: Detect
+batch: 1
+imgsz:
+- 640
+- 640
+names:
+  0: person
+  1: ear
+  2: ear-mufs
+  3: face
+  4: face-guard
+  5: face-mask-medical
+  6: foot
+  7: tools
+  8: glasses
+  9: gloves
+  10: helmet
+  11: hands
+  12: head
+  13: medical-suit
+  14: shoes
+  15: safety-suit
+  16: safety-vest
+args:
+  data: null
+  batch: 1
+  fraction: 1.0
+  quantize: 16
+  nms: null
+  dynamic: false
+channels: 3
+end2end: false

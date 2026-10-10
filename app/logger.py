@@ -1,11 +1,14 @@
 """
-Event Logging and Violation Snapshot Recorder.
-Maintains structured CSV event audit trails and optional visual violation archives.
+High-Performance Asynchronous Event Logging and Violation Snapshot Recorder.
+Offloads all disk I/O (CSV writing and image encoding) to a background thread
+so inference and video display loops maintain maximum frame rate without stutter.
 """
 
 import os
 import csv
 import time
+import queue
+import threading
 from pathlib import Path
 from typing import Dict, Any, Optional
 import cv2
@@ -13,7 +16,8 @@ import numpy as np
 
 class SafetyEventLogger:
     """
-    Records compliance audit trails and violation image snapshots.
+    Asynchronous event logger that records compliance audit trails and violation image snapshots
+    without blocking the video inference loop.
     """
     def __init__(
         self,
@@ -45,6 +49,44 @@ class SafetyEventLogger:
                 writer = csv.DictWriter(f, fieldnames=self.fieldnames)
                 writer.writeheader()
 
+        # Asynchronous Queue & Background Worker Thread
+        self._queue = queue.Queue(maxsize=500)
+        self._stop_event = threading.Event()
+        self._worker_thread = threading.Thread(target=self._process_queue, daemon=True)
+        self._worker_thread.start()
+
+    def _process_queue(self):
+        """Background worker consuming disk I/O tasks."""
+        while not self._stop_event.is_set() or not self._queue.empty():
+            try:
+                task = self._queue.get(timeout=0.2)
+            except queue.Empty:
+                continue
+
+            try:
+                task_type = task["type"]
+                if task_type == "log":
+                    # 1. Optionally save image
+                    screenshot_path = ""
+                    if task.get("frame_to_save") is not None:
+                        img_path = task["screenshot_target_path"]
+                        cv2.imwrite(str(img_path), task["frame_to_save"])
+                        screenshot_path = str(img_path)
+
+                    # 2. Append CSV
+                    row = task["row_data"]
+                    if screenshot_path:
+                        row["screenshot_path"] = screenshot_path
+
+                    with open(self.log_file, "a", newline="", encoding="utf-8") as f:
+                        writer = csv.DictWriter(f, fieldnames=self.fieldnames)
+                        writer.writerow(row)
+
+            except Exception as e:
+                print(f"[logger] Error writing event in background thread: {e}")
+            finally:
+                self._queue.task_done()
+
     def log_compliance_event(
         self,
         frame_id: int,
@@ -52,24 +94,25 @@ class SafetyEventLogger:
         raw_frame: Optional[np.ndarray] = None
     ) -> Optional[str]:
         """
-        Logs an individual worker compliance event to the CSV log file.
-        If the event is a violation and save_screenshots is enabled, writes an image snapshot.
+        Asynchronously enqueues an event for zero-latency execution.
+        Returns immediately without stalling the video inference loop.
         """
         timestamp_str = time.strftime("%Y-%m-%d %H:%M:%S")
         status = worker_info["status"]
         screenshot_path = ""
+        frame_copy = None
 
-        # Save violation snapshot if requested
         if not worker_info["is_compliant"] and self.save_screenshots and raw_frame is not None:
-            filename = f"violation_f{frame_id:06d}_{worker_info['worker_id'].replace(' ', '_')}_{int(time.time())}.jpg"
-            save_path = self.violation_dir / filename
-            
-            # Create a localized crop or annotated full frame
-            annotated_frame = raw_frame.copy()
+            filename = f"violation_f{frame_id:06d}_{worker_info['worker_id'].replace(' ', '_')}_{int(time.time() * 1000)}.jpg"
+            screenshot_target = self.violation_dir / filename
+            screenshot_path = str(screenshot_target)
+
+            # Draw annotation on a fast copy
+            frame_copy = raw_frame.copy()
             w_box = [int(v) for v in worker_info["worker_box"]]
-            cv2.rectangle(annotated_frame, (w_box[0], w_box[1]), (w_box[2], w_box[3]), (0, 0, 255), 2)
+            cv2.rectangle(frame_copy, (w_box[0], w_box[1]), (w_box[2], w_box[3]), (0, 0, 255), 2)
             cv2.putText(
-                annotated_frame,
+                frame_copy,
                 f"PPE VIOLATION: Missing {', '.join(worker_info['missing_ppe'])}",
                 (w_box[0], max(20, w_box[1] - 10)),
                 cv2.FONT_HERSHEY_SIMPLEX,
@@ -77,10 +120,7 @@ class SafetyEventLogger:
                 (0, 0, 255),
                 2
             )
-            cv2.imwrite(str(save_path), annotated_frame)
-            screenshot_path = str(save_path)
 
-        # Write CSV row
         row = {
             "timestamp": timestamp_str,
             "frame_id": frame_id,
@@ -92,8 +132,22 @@ class SafetyEventLogger:
             "screenshot_path": screenshot_path
         }
 
-        with open(self.log_file, "a", newline="", encoding="utf-8") as f:
-            writer = csv.DictWriter(f, fieldnames=self.fieldnames)
-            writer.writerow(row)
+        task = {
+            "type": "log",
+            "row_data": row,
+            "screenshot_target_path": screenshot_path if frame_copy is not None else None,
+            "frame_to_save": frame_copy
+        }
+
+        try:
+            self._queue.put_nowait(task)
+        except queue.Full:
+            pass # Prevent unbounded memory usage if disk write stalls
 
         return screenshot_path
+
+    def close(self):
+        """Flush queue and cleanly stop background thread."""
+        self._stop_event.set()
+        if self._worker_thread.is_alive():
+            self._worker_thread.join(timeout=2.0)

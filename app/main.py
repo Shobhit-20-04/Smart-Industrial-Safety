@@ -1,13 +1,16 @@
 """
-Main Real-Time Application for Smart Industrial Safety Monitoring System.
-Handles webcam, video file, and image inputs.
-Executes OpenVINO/PyTorch detection, evaluates compliance policies, renders HUD,
-and records audit logs.
+Ultra-Fast Real-Time Industrial Safety Monitoring Application.
+Features:
+- Threaded asynchronous video stream buffering (zero-blocking camera I/O)
+- Auto hardware acceleration (CUDA GPU for PyTorch, OpenVINO for CPU/NPU)
+- Dynamic frame stride and resolution scaling for extreme responsiveness
+- Asynchronous audit logging and screenshot saving
 """
 
 import sys
 import time
 import argparse
+import threading
 from pathlib import Path
 
 # Ensure project root is in sys.path
@@ -30,6 +33,42 @@ COLOR_VEST = (255, 180, 0)         # Cyan/Blue
 COLOR_NEUTRAL = (180, 180, 180)    # Gray
 COLOR_PANEL_BG = (25, 25, 25)      # Dark Gray
 
+class ThreadedVideoStream:
+    """
+    Dedicated video capture thread that continuously reads frames
+    from webcam or video stream, eliminating camera I/O blocking.
+    """
+    def __init__(self, src: int | str):
+        self.cap = cv2.VideoCapture(src)
+        if not self.cap.isOpened():
+            raise RuntimeError(f"Unable to open video stream source: {src}")
+
+        self.ret, self.frame = self.cap.read()
+        self.stopped = False
+        self.lock = threading.Lock()
+        self.thread = threading.Thread(target=self._update, daemon=True)
+        self.thread.start()
+
+    def _update(self):
+        while not self.stopped:
+            ret, frame = self.cap.read()
+            if not ret or frame is None:
+                self.stopped = True
+                break
+            with self.lock:
+                self.ret = ret
+                self.frame = frame
+
+    def read(self):
+        with self.lock:
+            return self.ret, self.frame.copy() if self.frame is not None else None
+
+    def stop(self):
+        self.stopped = True
+        if self.thread.is_alive():
+            self.thread.join(timeout=1.0)
+        self.cap.release()
+
 def draw_hud(
     frame: np.ndarray,
     compliance_data: dict,
@@ -39,7 +78,7 @@ def draw_hud(
     runtime_name: str
 ) -> np.ndarray:
     """
-    Renders research-grade industrial safety HUD with statistics panel and worker cards.
+    Renders high-speed industrial safety HUD with statistics panel and worker cards.
     """
     h, w = frame.shape[:2]
     annotated = frame.copy()
@@ -65,7 +104,7 @@ def draw_hud(
     # 2. Draw PPE Detections (Thin bounding boxes)
     for ppe in compliance_data.get("all_ppe_detections", []):
         bx = [int(v) for v in ppe["box"]]
-        cname = ppe["class_name"]
+        cname = ppe["class_name"].lower()
         color = COLOR_HELMET if "helmet" in cname else (COLOR_VEST if "vest" in cname else COLOR_NEUTRAL)
         cv2.rectangle(annotated, (bx[0], bx[1]), (bx[2], bx[3]), color, 1)
         label = f"{cname} {ppe['conf']:.2f}"
@@ -126,8 +165,10 @@ def draw_hud(
 def run_safety_monitor(
     source: str,
     model_path: Path,
-    device: str = "cpu",
+    device: str = "auto",
+    imgsz: int = 640,
     conf_thresh: float = 0.35,
+    frame_stride: int = 1,
     required_ppe: list = None,
     save_violations: bool = True,
     log_file: Path = Path("results/logs/safety_events.csv"),
@@ -135,22 +176,23 @@ def run_safety_monitor(
     display: bool = True
 ):
     print("=" * 70)
-    print("LAUNCHING SMART INDUSTRIAL SAFETY MONITORING SYSTEM")
+    print("SMART INDUSTRIAL SAFETY MONITORING SYSTEM (HIGH-SPEED ENGINE)")
     print("=" * 70)
     print(f"Input Source:       {source}")
     print(f"Model Architecture: {model_path}")
-    print(f"Execution Device:   {device.upper()}")
+    print(f"Hardware Target:    {device.upper()}")
+    print(f"Inference Scale:    {imgsz}x{imgsz}")
+    print(f"Frame Stride:       {frame_stride}")
     print(f"Confidence Thresh:  {conf_thresh}")
     print(f"Required PPE:       {required_ppe}")
-    print(f"Audit Log File:     {log_file}")
     print("=" * 70)
 
     # Initialize components
-    detector = PPEDetector(model_path=model_path, device=device)
+    detector = PPEDetector(model_path=model_path, device=device, imgsz=imgsz)
     compliance_engine = PPEComplianceEngine(required_ppe=required_ppe)
     logger = SafetyEventLogger(log_file=log_file, save_screenshots=save_violations)
 
-    # Check if source is image file
+    # Image File Processing
     source_path = Path(source) if not source.isdigit() else None
     is_image = source_path and source_path.suffix.lower() in [".jpg", ".jpeg", ".png", ".bmp"]
 
@@ -162,7 +204,7 @@ def run_safety_monitor(
         detections, latency_ms = detector.detect(frame, conf_thresh=conf_thresh)
         compliance_data = compliance_engine.evaluate_compliance(detections)
 
-        # Log events
+        # Log events asynchronously
         for w_info in compliance_data["worker_assessments"]:
             logger.log_compliance_event(1, w_info, frame)
 
@@ -180,7 +222,6 @@ def run_safety_monitor(
         cv2.imwrite(str(out_img_path), annotated)
         print(f"[monitor] Processed image saved to: {out_img_path}")
 
-        # Print console checklist
         print("\n" + "=" * 50)
         print("WORKER SAFETY CHECKLIST SUMMARY")
         print("=" * 50)
@@ -190,49 +231,52 @@ def run_safety_monitor(
                 print(f"  {item.replace('-', ' ').title()}: {data['status']}")
             print(f"  Status: {w_info['status']}\n")
         print("=" * 50)
+        logger.close()
         return
 
-    # Video stream / Webcam processing
+    # Video stream / Webcam processing using non-blocking ThreadedVideoStream
     cap_src = int(source) if source.isdigit() else str(source)
-    cap = cv2.VideoCapture(cap_src)
-    if not cap.isOpened():
-        raise RuntimeError(f"Unable to open video stream/webcam source: {source}")
+    stream = ThreadedVideoStream(cap_src)
 
     video_writer = None
-    frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    fps_in = cap.get(cv2.CAP_PROP_FPS) or 25.0
+    frame_width = int(stream.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    frame_height = int(stream.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps_in = stream.cap.get(cv2.CAP_PROP_FPS) or 30.0
 
     if output_video:
         output_video = Path(output_video).resolve()
         output_video.parent.mkdir(parents=True, exist_ok=True)
         fourcc = cv2.VideoWriter_fourcc(*"mp4v")
         video_writer = cv2.VideoWriter(str(output_video), fourcc, fps_in, (frame_width, frame_height))
-        print(f"[monitor] Recording video output to: {output_video}")
+        print(f"[monitor] Recording output video to: {output_video}")
 
     frame_id = 0
     fps_history = []
+    latest_compliance_data = {
+        "total_workers": 0, "compliant_workers": 0, "violating_workers": 0,
+        "cumulative_violations": 0, "worker_assessments": [], "all_ppe_detections": []
+    }
+    latest_latency = 0.0
 
-    print("[monitor] Commencing real-time monitoring loop (press 'q' or ESC to stop)...")
+    print("[monitor] Real-time inference running. Press 'q' or ESC in display window to exit...")
     try:
-        while True:
-            ret, frame = cap.read()
+        while not stream.stopped:
+            ret, frame = stream.read()
             if not ret or frame is None:
                 break
 
             frame_id += 1
             t_start = time.perf_counter()
 
-            # 1. Detection
-            detections, latency_ms = detector.detect(frame, conf_thresh=conf_thresh)
+            # Execute detection on selected frame stride (e.g. 1 = every frame, 2 = alternate frames)
+            if frame_id % frame_stride == 0:
+                detections, latest_latency = detector.detect(frame, conf_thresh=conf_thresh)
+                latest_compliance_data = compliance_engine.evaluate_compliance(detections)
 
-            # 2. Compliance Evaluation
-            compliance_data = compliance_engine.evaluate_compliance(detections)
-
-            # 3. Log Audit Events (log every 15 frames or when violations occur)
-            for w_info in compliance_data["worker_assessments"]:
-                if not w_info["is_compliant"] or frame_id % 30 == 0:
-                    logger.log_compliance_event(frame_id, w_info, frame)
+                # Log events asynchronously
+                for w_info in latest_compliance_data["worker_assessments"]:
+                    if not w_info["is_compliant"] or frame_id % 30 == 0:
+                        logger.log_compliance_event(frame_id, w_info, frame)
 
             t_end = time.perf_counter()
             instant_fps = 1.0 / (t_end - t_start) if (t_end - t_start) > 0 else 0.0
@@ -241,12 +285,12 @@ def run_safety_monitor(
                 fps_history.pop(0)
             avg_fps = float(np.mean(fps_history))
 
-            # 4. Render HUD
+            # Render HUD
             annotated_frame = draw_hud(
                 frame,
-                compliance_data,
+                latest_compliance_data,
                 fps=avg_fps,
-                latency_ms=latency_ms,
+                latency_ms=latest_latency,
                 model_name=detector.model_path.name,
                 runtime_name=detector.runtime_name
             )
@@ -255,31 +299,36 @@ def run_safety_monitor(
                 video_writer.write(annotated_frame)
 
             if display:
-                cv2.imshow("Smart Industrial Safety Monitor", annotated_frame)
+                cv2.imshow("Smart Industrial Safety Monitor (High-Speed)", annotated_frame)
                 key = cv2.waitKey(1) & 0xFF
-                if key in [ord("q"), 27]: # 'q' or ESC
-                    print("\n[monitor] User interrupted video feed.")
+                if key in [ord("q"), 27]:
+                    print("\n[monitor] User terminated monitoring.")
                     break
 
     finally:
-        cap.release()
+        stream.stop()
         if video_writer:
             video_writer.release()
         if display:
             cv2.destroyAllWindows()
-        print(f"[monitor] Session concluded. Total frames processed: {frame_id}")
+        logger.close()
+        print(f"[monitor] Finished. Total frames processed: {frame_id}")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Real-Time Smart Industrial Safety Monitoring System.")
+    parser = argparse.ArgumentParser(description="High-Speed Smart Industrial Safety Monitor.")
     parser.add_argument("--source", type=str, default="0",
                         help="Video source: '0' for webcam, path to video (.mp4), or path to image (.jpg)")
     parser.add_argument("--model", type=Path, default=Path("models/yolov8s_int8_openvino_model"),
                         help="Path to OpenVINO model folder or PyTorch .pt model file")
-    parser.add_argument("--device", type=str, default="cpu", choices=["cpu", "gpu", "0"],
-                        help="Hardware execution device")
+    parser.add_argument("--device", type=str, default="auto", choices=["auto", "cpu", "gpu", "0"],
+                        help="Execution target (auto selects GPU for PyTorch, CPU for OpenVINO)")
+    parser.add_argument("--imgsz", type=int, default=640, choices=[480, 512, 640],
+                        help="Inference resolution scale (480/512 for higher speed, 640 for standard)")
+    parser.add_argument("--stride", type=int, default=1, choices=[1, 2, 3],
+                        help="Frame stride (1 = every frame, 2 = alternate frames for 2x speedup)")
     parser.add_argument("--conf", type=float, default=0.35, help="Detection confidence threshold")
     parser.add_argument("--required-ppe", type=str, default="helmet,safety-vest",
-                        help="Comma-separated required PPE list (e.g. helmet,safety-vest,gloves,glasses)")
+                        help="Comma-separated required PPE list")
     parser.add_argument("--save-violations", action="store_true", default=True,
                         help="Save visual snapshot on safety violation")
     parser.add_argument("--log-file", type=Path, default=Path("results/logs/safety_events.csv"),
@@ -296,7 +345,9 @@ if __name__ == "__main__":
         source=args.source,
         model_path=args.model,
         device=args.device,
+        imgsz=args.imgsz,
         conf_thresh=args.conf,
+        frame_stride=args.stride,
         required_ppe=ppe_list,
         save_violations=args.save_violations,
         log_file=args.log_file,

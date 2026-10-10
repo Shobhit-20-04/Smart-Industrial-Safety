@@ -35,6 +35,7 @@ weights/
 *.log
 *.tmp
 .cache/
+results/logs/violations/*.jpg
 
 # IDE & OS files
 .vscode/
