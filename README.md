@@ -119,32 +119,7 @@ python scripts/train.py --model yolov8s.pt --data datasets/SH17/data.yaml --epoc
 
 ---
 
-## 10. Experimental Results (To Be Populated Post-Execution)
-
-### Model Comparison
-| Model | Params (M) | FLOPs (G) | Size (MB) | Precision | Recall | mAP@50 | mAP@50-95 | Latency (ms) | FPS |
-|---|---|---|---|---|---|---|---|---|---|
-| **YOLOv8n** | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] |
-| **YOLOv8s** | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] |
-
-### OpenVINO Optimization Trade-off
-| Runtime | Precision | Latency (ms) | FPS | Model Size (MB) | mAP@50 | Accuracy Delta (%) |
-|---|---|---|---|---|---|---|
-| PyTorch | FP32 | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | Baseline |
-| OpenVINO | FP32 | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] |
-| OpenVINO | FP16 | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] |
-| OpenVINO | INT8 | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] |
-
-### Cross-Dataset Generalization
-| Train Domain | Eval Domain | Common Classes | mAP@50 | mAP@50-95 | Generalization Drop (%) |
-|---|---|---|---|---|---|
-| SH17 | SH17 (In-domain) | 17 classes | [TO BE FILLED] | [TO BE FILLED] | Baseline |
-| SH17 | CHV (Cross-domain) | person, vest, helmet | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] |
-| SH17 | CHVG (Cross-domain) | person, vest, helmet, glass, head | [TO BE FILLED] | [TO BE FILLED] | [TO BE FILLED] |
-
----
-
-## 11. Real-Time Application & Dashboard
+## 10. Real-Time Application & Dashboard
 ```bash
 # Real-time PPE monitor (webcam)
 python demo/realtime_monitor.py --model models/best.pt --source 0
@@ -155,7 +130,7 @@ streamlit run app/streamlit_app.py
 
 ---
 
-## 12. Authors & Academic Affiliation
-- **Author**: M.Tech CSE Candidate
+## 11. Authors & Academic Affiliation
+- **Author**: Shobhit Agrawal
 - **Project**: M.Tech Research Project - Computer Science & Engineering
 - **Institution**: Vellore Institute of Technology (VIT)
