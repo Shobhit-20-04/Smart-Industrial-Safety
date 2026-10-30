@@ -1,5 +1,5 @@
 # Smart Industrial Safety Monitoring System
-# Core ML & Deep Learning Dependencies
+# Core ML, Deep Learning & Application Dependencies
 
 torch>=2.0.0
 torchvision>=0.15.0
@@ -13,3 +13,4 @@ scikit-learn>=1.2.0
 psutil>=5.9.0
 pyyaml>=6.0
 Pillow>=9.5.0
+streamlit>=1.25.0

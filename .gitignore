@@ -43,3 +43,21 @@ results/logs/violations/*.jpg
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Research Paper & Drafts (Private - Do NOT push to GitHub)
+results/paper_data/
+results/paper_data.zip
+results/paper_data*
+*.docx
+*.pdf
+*.tex
+latex/
+papers/
+Smart_Industrial_Safety*
+scripts/paper_*.py
+scripts/*paper*
+scripts/fpga_architecture_exploration.py
+scripts/run_comprehensive_comparisons.py
+scripts/run_execution_breakdown.py
+scripts/parse_benchmark_app.py
+demo/sample_industrial_test.mp4
