@@ -408,10 +408,14 @@ This project was conducted as part of research in **Computer Architecture and Or
 
 If you use this project, codebase, or findings in your academic work or industrial research, please cite:
 
+### Standard Reference:
+> **Shobhit Agrawal, Mayuri Rajendra Pawar, and Aaryan Dawalkar**, *"Smart Industrial Safety Monitoring System: Real-Time Edge PPE Compliance via OpenVINO INT8 Quantization and FPGA Implementation Roadmap"*, School of Computer Science and Engineering, Vellore Institute of Technology, 2026. Available: https://github.com/Shobhit-20-04/Smart-Industrial-Safety
+
+### BibTeX:
 ```bibtex
-@misc{agrawal2026smartppe,
+@misc{smart_industrial_safety_2026,
   title={Smart Industrial Safety Monitoring System: Real-Time Edge PPE Compliance via OpenVINO INT8 Quantization and FPGA Implementation Roadmap},
-  author={Agrawal, Shobhit and Pawar, Mayuri Rajendra and Dawalkar, Aaryan},
+  author={Shobhit Agrawal and Mayuri Rajendra Pawar and Aaryan Dawalkar},
   year={2026},
   howpublished={\url{https://github.com/Shobhit-20-04/Smart-Industrial-Safety}},
   note={School of Computer Science and Engineering, Vellore Institute of Technology}
